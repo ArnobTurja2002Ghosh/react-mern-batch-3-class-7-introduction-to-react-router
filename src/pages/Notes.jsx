@@ -9,6 +9,7 @@ const Notes = () => {
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortNames, setSortNames] =useState(false);
+	const [excludeTypes, setExcludeTypes]=useState([]);
 	
 
 	const filteredPokemonList = notes.filter((pokemon) =>
@@ -29,7 +30,34 @@ const Notes = () => {
 			return 0;
 		  });
 	}
-	
+
+	const filterTypes = (note)=>{
+		for(let t1 of note.types){
+			//console.log(t1.type.name);
+			let name1 = t1.type.name;
+			if(excludeTypes.includes(name1))
+			{
+				console.log(note.name + " excluded");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	let types = notes.map((note)=>note.types);
+	types=types.flat().map((note)=>note.type.name);
+	let uniqueTypes= [...(new Set(types))];
+
+	const notes2 = notes1.filter(filterTypes);
+
+	// useEffect(() => {
+	// 	const notes2 = notes1.filter(filterTypes); // Overwrite notes1
+	// 	console.log(notes1);
+	// }, [excludeTypes]);
+
+	//types=types.map((note)=>note.type);
+	//console.log(types);
+	//console.log(excludeTypes);
 	//notes.map((note) => {console.log(note.sprites.other.home);});
 	return (
 		<div  className="">
@@ -43,13 +71,26 @@ const Notes = () => {
 			</div>
 			
 			<div>
-				<h2>{notes1.length} Pokemons</h2>
+				<h2>{notes2.length} Pokemons</h2>
 				<button onClick={() => {console.log("sorting");
 									setSortNames(!sortNames);
 									
 				}}>Sort by name</button> 
+				<ul>
+					{uniqueTypes.map((type)=> (
+						<div key={type}>
+							<input type="checkbox" name="" id="" checked={!excludeTypes.includes(type)} onChange={()=>{
+								
+								setExcludeTypes(excludeTypes.includes(type)? excludeTypes.filter((a)=> a!=type): [...excludeTypes, type]); 
+							
+								}}/>
+							<li>{type}</li>
+						</div>
+					)
+					)}
+				</ul>
 				<ul className="flex flex-row flex-wrap">
-					{notes1.map((note) => (
+					{notes2.map((note) => (
 						<div key={note.name} className="w-1/5 h-56 border-2">
 							<li className="text-2xl text-center">{note.name.charAt(0).toUpperCase() + note.name.slice(1)}</li>
 							<div className="h-4/6 content-evenly">
