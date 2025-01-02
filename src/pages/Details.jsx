@@ -12,8 +12,8 @@ const PostDetails = () => {
 	//const dispatch =useDispatch();
 	return (
 		<div>
-			<h2>Pokemon Name - {post?.name}</h2>
-			<img src={post?.sprites.other.showdown.front_default}></img>
+			<h2 className="text-xl">Pokemon Name - {post?.name.charAt(0).toUpperCase() + post?.name.slice(1)}</h2>
+			<img className="h-80" src={post?.sprites.other.home.front_default}></img>
             <div>Abilities:</div>
             <ul className="list-disc">
                 {post?.abilities.map((ability1)=>(
@@ -26,8 +26,8 @@ const PostDetails = () => {
                         <li className="ml-10" key={ability1.type.url}>{ability1.type.name}</li>
                     ))}
             </ul>
-            <div>Base Stats</div>
-            <table>
+            <div className="ml-52">Base Stats</div>
+            <table className="ml-52">
             <tbody>
                 {post?.stats.map((ability1)=>(
                         <tr key={ability1.stat.name}><td>{ability1.stat.name}</td><td>{ability1.base_stat}</td></tr>

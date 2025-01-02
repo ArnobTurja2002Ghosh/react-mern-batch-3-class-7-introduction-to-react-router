@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 export default function Root() {
 	return (
 		<div>
-			<div id="sidebar">
+			<div id="sidebar" className="sticky top-1">
 				<Nav />
 			</div>
 			<div id="detail">
