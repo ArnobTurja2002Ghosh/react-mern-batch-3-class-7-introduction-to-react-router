@@ -1,11 +1,12 @@
 import { useLoaderData, Form, Link } from "react-router";
 import React, { useEffect, useState } from "react";
 import { Switch } from '@headlessui/react'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import PokeCard from "../components/PokeCard";
 const Notes = () => {
 
 	const [data, setData] = useState(useLoaderData());
-	const [loading, setLoading] = useState(true);
+	//const [loading, setLoading] = useState(true);
 
 	const [offset, setOffset]=useState(0);
 	useEffect(() => {
@@ -28,8 +29,6 @@ const Notes = () => {
 			setData(results);
 		  } catch (err) {
 			setError(err.message);
-		  } finally {
-			setLoading(false);
 		  }
 		};
 	
@@ -82,7 +81,8 @@ const Notes = () => {
 
 	const notes2 = notes1.filter(filterTypes);
 
-	if(loading){<img src="https://i.pinimg.com/736x/36/2e/f3/362ef366a3fcaba012d6f9903535763e.jpg"></img>}
+	const cart = useSelector((storeState)=>storeState.cart);
+	//if(loading){<img src="https://i.pinimg.com/736x/36/2e/f3/362ef366a3fcaba012d6f9903535763e.jpg"></img>}
 	// useEffect(() => {
 	// 	const notes2 = notes1.filter(filterTypes); // Overwrite notes1
 	// 	console.log(notes1);
@@ -138,7 +138,9 @@ const Notes = () => {
 					</div>
 				)
 				)}
-				<ul className="flex flex-row flex-wrap">
+
+				<PokeCard notes2={notes2}/>
+				{/* <ul className="flex flex-row flex-wrap">
 					{notes2.map((note) => (
 						<div key={note.name} className="w-1/5 h-56 border-2">
 							<li className="text-3xl text-center">{note.name.charAt(0).toUpperCase() + note.name.slice(1)}</li>
@@ -147,13 +149,19 @@ const Notes = () => {
 							</div>
 							
 							<Link to={`/pokemon/${note.name}`}>
-								<button>View Details</button>
+								<button><img className="w-10" src="https://static.vecteezy.com/system/resources/previews/005/747/906/non_2x/info-icon-template-information-icon-colorful-free-vector.jpg" alt="" /></button>
 							</Link>
-							<button onClick={() => dispatch({type:'cart/addToCart', payload: note})}>Add to Fav</button>
+							<button onClick={() => {
+													const type1= cart.some((e1)=>e1.name==note.name)? "cart/removeFromCart": "cart/addToCart";
+													dispatch({type:type1, payload: note});
+													//console.log(cart);
+													}}>
+														<img className="w-10" src={ cart.some((e1)=>e1.name==note.name)?"https://cdn-icons-png.freepik.com/256/7219/7219095.png?semt=ais_hybrid":"https://www.iconpacks.net/icons/2/free-heart-icon-3510-thumb.png"} alt="" />
+													</button>
         	
 						</div>
 					))}
-				</ul>
+				</ul> */}
 			</div>
 		</div>
 	);

@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useLoaderData, Form, Link } from "react-router";
 import { useSelector } from "react-redux";
 import {useDispatch} from "react-redux";
+import PokeCard from "../components/PokeCard";
 const Favourites = () => {
     const cart = useSelector((storeState)=>storeState.cart);
     const dispatch =useDispatch();
     //console.log(cart);
     return <div className="all-notes">
                 <h2>All Favourites</h2>
-                <ul>
+                <PokeCard notes2={cart}/>
+
+                {/* <ul>
                     {cart.map((note) => (
                         <div key={note.name}>
                             <li>{note.name}</li>
@@ -20,7 +23,7 @@ const Favourites = () => {
         
                         </div>
                     ))}
-                </ul>
+                </ul> */}
             </div>
 }
 
