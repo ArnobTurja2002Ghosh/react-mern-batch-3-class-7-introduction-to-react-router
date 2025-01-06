@@ -12,7 +12,7 @@ createRoot(document.getElementById("ourRoot")).render(
 		<Provider store={store}>
 			<RouterProvider router={rootRouter} />
 		</Provider>
-	</StrictMode>,
+	</StrictMode>
 );
 
 // React Dom -> Main Dom /HTML             -> React App

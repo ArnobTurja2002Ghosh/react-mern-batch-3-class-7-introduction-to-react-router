@@ -48,7 +48,8 @@ const Notes = () => {
 	);
 	
 	console.log(filteredPokemonList);
-	const notes1= filteredPokemonList.length >0? filteredPokemonList:notes;
+	const notes1= searchTerm.length >0? filteredPokemonList:notes;
+	
 	if(sortNames)
 	{
 		notes1.sort(function (a, b) {
@@ -75,7 +76,7 @@ const Notes = () => {
 		return true;
 	}
 
-	let types = notes.map((note)=>note.types);
+	let types = notes1.map((note)=>note.types);
 	types=types.flat().map((note)=>note.type.name);
 	let uniqueTypes= [...(new Set(types))];
 
@@ -92,6 +93,7 @@ const Notes = () => {
 	//console.log(types);
 	//console.log(excludeTypes);
 	//notes.map((note) => {console.log(note.sprites.other.home);});
+	
 	return (
 		<div  className="">
 			<div className="grid grid-cols-2">
@@ -107,9 +109,9 @@ const Notes = () => {
 			</div>
 			<div className="search-container">
 				<input className="search-box" type="text" placeholder="Search..." 
-				value={searchTerm} 
+				// value={searchTerm} 
 				onChange={event => {
-					setSearchTerm(event.target.value);
+					setSearchTerm(event.target.value.toLowerCase());
 				}}
 				/>
 			</div>
